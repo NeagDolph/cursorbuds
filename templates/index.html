@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>Azure</title>
+    <style>
+      img {
+        position: absolute;
+      }
+
+      body {
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <img
+      style="top: -100px; left: -100px;"
+      id="geed"
+      onclick="document.body.webkitRequestFullScreen();"
+      src="/static/you.png"
+      width="16px"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script>
+      var users = {{data|safe}};
+      var you = "{{you}}";
+    </script>
+    <script src="/static/main.js"></script>
+  </body>
+</html>
