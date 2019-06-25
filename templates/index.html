@@ -8,6 +8,27 @@
 
       body {
         overflow: hidden;
+
+      }
+
+      .circle {
+        width: 150px;
+        height: 150px;
+        position: relative;
+        border-radius: 1000px;
+        z-index: -99;
+        display: block;
+        margin: auto;
+      }
+
+      .cont {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        top: 0;
+        left: 0;
       }
     </style>
   </head>
@@ -15,10 +36,12 @@
     <img
       style="top: -100px; left: -100px;"
       id="geed"
-      onclick="document.body.webkitRequestFullScreen();"
       src="/static/you.png"
       width="16px"
     />
+    <div class="cont">
+      <div class="circle" style="background: green">
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script>
       var users = {{data|safe}};
