@@ -11,6 +11,10 @@ var circlemodenon;
 var angleofcursor;
 var circlemodestart = 0;
 var circlemodeborder = 0;
+var treemode = false;
+var treemodex = 0;
+var circlecoords = [0, 0];
+var circlemode;
 
 console.log(users);
 Object.entries(users).map(e => {
@@ -30,10 +34,6 @@ Object.entries(users).map(e => {
 });
 
 bodyEle.onclick = function(e) {
-  if (locked) {
-    circlemode = false;
-    return;
-  }
   bodyEle.requestPointerLock =
     bodyEle.requestPointerLock ||
     bodyEle.mozRequestPointerLock ||
@@ -52,13 +52,9 @@ function changeCallback(e) {
     document.mozPointerLockElement === bodyEle ||
     document.webkitPointerLockElement === bodyEle
   ) {
-    // Pointer was just locked
-    // Enable the mousemove listener
     document.addEventListener("mousemove", moveCallback, false);
     locked = true;
   } else {
-    // Pointer was just unlocked
-    // Disable the mousemove listener
     document.removeEventListener("mousemove", moveCallback, false);
     locked = false;
   }
@@ -66,13 +62,7 @@ function changeCallback(e) {
 
 var last2x = [0, 0];
 
-//average
 var last2xav = 0;
-
-// var last4y = [0, 0, 0, 0];
-
-// //average
-// var last4yav = 0;
 
 var circley = circleobj.offsetTop + 75;
 var circlex = circleobj.offsetLeft + 75;
@@ -82,12 +72,38 @@ function moveCallback(e) {
 
   var nextX = globalcords[1] + e.movementX;
 
-  // last2x = last2x.slice(1);
-  // last2x.push(e.movementX);
-  // last2xav = last2x.reduce((partial_sum, a) => partial_sum + a, 0) / 2;
-
   let cordx = globalcords[1] + 11;
   let cordy = globalcords[0] + 18;
+
+  if (parseInt(circleobj.style.width) > window.innerWidth) {
+    if (!treemode) {
+      treemode = true;
+
+      console.log("GIS");
+
+      document.querySelector(".cursorline").style.display = "block";
+      document.querySelector(".movecircle").style.display = "block";
+
+      circlecoords = [window.innerHeight / 2, window.innerWidth / 2];
+    }
+
+    if (treemodex >= 0) {
+      treemodex -= e.movementX / 20;
+    } else {
+      treemodex = 0;
+    }
+
+    console.log(treemodex / 12);
+    document.querySelector(
+      ".movecircle"
+    ).style.transform = `scale(${treemodex ** 0.8 / 400})`;
+
+    circlecoords[1] = window.innerWidth / 2 + (treemodex < 0 ? 0 : treemodex);
+
+    document.querySelector(".movecircle").style.left = circlecoords[1] - 70;
+
+    return;
+  }
 
   let circdistance =
     Math.abs(((nextY - circley) ** 2 + (nextX - circlex) ** 2) ** 0.5) / 3;

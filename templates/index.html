@@ -8,7 +8,6 @@
 
       body {
         overflow: hidden;
-
       }
 
       .circle {
@@ -21,6 +20,20 @@
         margin: auto;
       }
 
+      .movecircle {
+        width: 150px;
+        height: 150px;
+        position: absolute;
+        margin: auto;
+        border-radius: 50%;
+        display: block;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        background: #2d2d2d;
+      }
+
       .cont {
         position: absolute;
         width: 100%;
@@ -29,6 +42,17 @@
         align-items: center;
         top: 0;
         left: 0;
+      }
+
+      .cursorline {
+        margin: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        height: 1px;
+        width: 50%;
+        background: #2d2d2d;
       }
     </style>
   </head>
@@ -39,9 +63,12 @@
       src="/static/you.png"
       width="16px"
     />
+    <div class="cursorline" style="display: none"></div>
     <div class="cont">
-      <div class="circle" style="background: green">
+      <div class="circle" style="background: green"></div>
     </div>
+
+    <div class="movecircle" style="background: #2d2d2d; display: none"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script>
       var users = {{data|safe}};
